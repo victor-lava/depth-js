@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Depth JS</title>
+        <script type="text/javascript" src="js/depth.js"></script>
+        <style media="screen">
+            body {
+                margin: 0;
+            }
+
+            #start {
+                height: 100vh;
+                min-height: 477px;
+                background-color: black;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .victor-lava {
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                position: absolute;
+                z-index: 1;
+                width: 400px;
+                height: 613px;
+                background-image: url('img/victor-lava.png');
+                background-repeat: no-repeat;
+                background-size: 100%;
+            }
+
+            .background {
+                position: absolute;
+                z-index: 1;
+                width: 105%;
+                height: 105%;
+                left: -2%;
+                top: -4%;
+                background-image: url('img/background.jpg');
+                background-size: 100%;
+                background-repeat: no-repeat;
+            }
+        </style>
+    </head>
+    <body>
+
+        <section id="start">
+
+            <div class="depth-js">
+                <div class="background" data-depth="0.3"></div>
+                <div class="victor-lava" data-depth="0.4"></div>
+            </div>
+
+        </section>
+
+        <script type="text/javascript">
+            var depth = new Depth({
+                parent: "#start",
+                children: '.depth-js'
+            })
+        </script>
+
+    </body>
+</html>
