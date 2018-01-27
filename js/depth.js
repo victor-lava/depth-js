@@ -3,8 +3,9 @@ var Depth = function(settings) {
     this.parent = document.querySelector(settings.parent);
     this.children = this.parent.querySelector(settings.children);
     this.elements = this.children.querySelectorAll('*[data-depth]');
-    this.coordinates = {x: 0, y: 0};
-
+    this.coordinates = { x: 0, y: 0 };
+    this.intesity = settings.intesity;
+    
     // Add neccesery attributes to movable objects
     var center = this.getCenterCoordinates(this.parent);
     console.log(center);
@@ -14,27 +15,17 @@ var Depth = function(settings) {
 
         var coordinates = { x: 0, y: 0 };
 
-        coordinates.x = center.x - e.clientX;
-        coordinates.y = center.y - e.clientY;
+        this.coordinates.x = center.x - e.clientX;
+        this.coordinates.y = center.y - e.clientY;
 
+        this.setIntensity(settings.intesity);
+        this.move();
 
-        this.addAttributes();
-        this.move(coordinates.x, coordinates.y);
-
-        // console.log(coordinates);
+        console.log(this);
     }.bind(this));
 
 
 
-
-}
-
-// Adds transform styles
-Depth.prototype.addAttributes = function() {
-
-    for(i = 0; i < this.elements.length; i++) {
-        this.elements[i].setAttribute('style', 'transform-style: preserve-3d; backface-visibility: hidden;');
-    }
 
 }
 
@@ -50,8 +41,19 @@ Depth.prototype.getCenterCoordinates = function(element) {
     return coordinates;
 }
 
+// Scales down the coordinate
+Depth.prototype.setIntensity = function(intesity) {
+
+    this.coordinates.x = this.coordinates.x / intesity;
+    this.coordinates.y = this.coordinates.y / intesity;
+
+}
+
 // Adds transform styles
-Depth.prototype.move = function(x, y) {
+Depth.prototype.move = function() {
+
+    var x = this.coordinates.x,
+        y = this.coordinates.y;
 
     for(i = 0; i < this.elements.length; i++) {
         this.elements[i].setAttribute('style', 'transform-style: preserve-3d;' +
