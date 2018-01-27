@@ -5,7 +5,7 @@ var Depth = function(settings) {
     this.elements = this.children.querySelectorAll('*[data-depth]');
     this.coordinates = { x: 0, y: 0 };
     this.intesity = settings.intesity;
-    
+
     // Add neccesery attributes to movable objects
     var center = this.getCenterCoordinates(this.parent);
     console.log(center);
@@ -19,7 +19,7 @@ var Depth = function(settings) {
         this.coordinates.y = center.y - e.clientY;
 
         this.setIntensity(settings.intesity);
-        this.move();
+        this.moveElements();
 
         console.log(this);
     }.bind(this));
@@ -50,15 +50,22 @@ Depth.prototype.setIntensity = function(intesity) {
 }
 
 // Adds transform styles
-Depth.prototype.move = function() {
-
-    var x = this.coordinates.x,
-        y = this.coordinates.y;
+Depth.prototype.moveElements = function() {
 
     for(i = 0; i < this.elements.length; i++) {
+
+        var depth = this.elements[i].dataset.depth,
+            extraMovement = { x: 0, y: 0 };
+
+        extraMovement.x = depth * this.coordinates.x;
+        extraMovement.y = depth * this.coordinates.y;
+
+        this.coordinates.x = this.coordinates.x - extraMovement.x;
+        this.coordinates.y = this.coordinates.y - extraMovement.y;
+
         this.elements[i].setAttribute('style', 'transform-style: preserve-3d;' +
                                                'backface-visibility: hidden;' +
-                                               'transform: translate3d(' + x + '%, ' + y + '%, 0px)');
+                                               'transform: translate3d(' + this.coordinates.x + '%, ' + this.coordinates.y + '%, 0px)');
     }
 
 }
