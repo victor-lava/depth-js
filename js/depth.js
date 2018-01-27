@@ -44,8 +44,10 @@ Depth.prototype.getCenterCoordinates = function(element) {
 // Scales down the coordinate
 Depth.prototype.setIntensity = function(intesity) {
 
-    this.coordinates.x = this.coordinates.x / intesity;
-    this.coordinates.y = this.coordinates.y / intesity;
+    intesity = intesity / 100;
+
+    this.coordinates.x = this.coordinates.x * intesity;
+    this.coordinates.y = this.coordinates.y * intesity;
 
 }
 
